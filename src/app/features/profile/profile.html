@@ -1,0 +1,119 @@
+<div class="page-container py-8 max-w-2xl mx-auto">
+  <div class="mb-8">
+    <h1 class="font-display text-3xl font-bold text-white">
+      My <span class="text-gradient">Profile</span>
+    </h1>
+    <p class="text-slate-500 mt-1">Manage your account details</p>
+  </div>
+
+  <!-- Avatar section -->
+  <div class="card p-6 mb-6">
+    <div class="flex items-center gap-5">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-primary-500/20">
+        {{ initials() }}
+      </div>
+      <div>
+        <h2 class="font-display text-xl font-semibold text-white">
+          {{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName }}
+        </h2>
+        <p class="text-slate-500 text-sm">{{ authService.currentUser()?.email }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit form -->
+  <div class="card p-6 mb-6">
+    <h3 class="font-display font-semibold text-white mb-5 flex items-center gap-2">
+      <svg class="w-4 h-4 text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+      </svg>
+      Edit Information
+    </h3>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="flex flex-col gap-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="input-label">First Name</label>
+          <input type="text" formControlName="firstName" class="input-field"
+                 [class.border-red-500]="isInvalid('firstName')">
+          <p *ngIf="isInvalid('firstName')" class="text-red-400 text-xs mt-1">Required</p>
+        </div>
+        <div>
+          <label class="input-label">Last Name</label>
+          <input type="text" formControlName="lastName" class="input-field"
+                 [class.border-red-500]="isInvalid('lastName')">
+          <p *ngIf="isInvalid('lastName')" class="text-red-400 text-xs mt-1">Required</p>
+        </div>
+      </div>
+
+      <div>
+        <label class="input-label">Email Address</label>
+        <input type="email" formControlName="email" class="input-field"
+               [class.border-red-500]="isInvalid('email')">
+        <p *ngIf="isInvalid('email')" class="text-red-400 text-xs mt-1">Valid email required</p>
+      </div>
+
+      <div *ngIf="successMessage()" class="flex items-center gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        {{ successMessage() }}
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit" [disabled]="saving()" class="btn-primary">
+          <svg *ngIf="saving()" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          <span *ngIf="saving()">Saving...</span>
+          <span *ngIf="!saving()">Save Changes</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Change password -->
+  <div class="card p-6 mb-6">
+    <h3 class="font-display font-semibold text-white mb-5 flex items-center gap-2">
+      <svg class="w-4 h-4 text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+      </svg>
+      Change Password
+    </h3>
+
+    <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="flex flex-col gap-4">
+      <div>
+        <label class="input-label">New Password</label>
+        <input type="password" formControlName="newPassword" placeholder="Min. 8 characters" class="input-field">
+      </div>
+      <div>
+        <label class="input-label">Confirm New Password</label>
+        <input type="password" formControlName="confirmPassword" placeholder="Repeat password" class="input-field">
+      </div>
+      <p *ngIf="hasPasswordMismatch()" class="text-red-400 text-xs">Passwords do not match</p>
+      <div class="flex justify-end">
+        <button type="submit" [disabled]="savingPassword()" class="btn-secondary">
+          <span *ngIf="savingPassword()">Updating...</span>
+          <span *ngIf="!savingPassword()">Update Password</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Danger zone -->
+  <div class="card p-6 border-red-500/20">
+    <h3 class="font-display font-semibold text-red-400 mb-3">Danger Zone</h3>
+    <p class="text-sm text-slate-500 mb-4">Deleting your account is permanent and cannot be undone. All your favorites and applications will be lost.</p>
+    <div *ngIf="!confirmDelete()">
+      <button (click)="confirmDeleteAccount()" class="btn-danger">
+        Delete Account
+      </button>
+    </div>
+    <div *ngIf="confirmDelete()" class="flex items-center gap-3">
+      <p class="text-sm text-red-400">Are you sure?</p>
+      <button (click)="deleteAccount()" class="btn-danger">Yes, delete</button>
+      <button (click)="cancelDelete()" class="btn-ghost text-sm">Cancel</button>
+    </div>
+  </div>
+</div>
