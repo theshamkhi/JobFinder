@@ -1,0 +1,111 @@
+<div class="page-container py-8">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="font-display text-3xl font-bold text-white">
+        My <span class="text-gradient">Applications</span>
+      </h1>
+      <p class="text-slate-500 mt-1">Track the status of your job applications</p>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  @if (!loading() && applications().length > 0) {
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="card p-4 text-center">
+        <p class="text-2xl font-display font-bold text-white">{{ applications().length }}</p>
+        <p class="text-xs text-slate-500 mt-1">Total</p>
+      </div>
+      <div class="card p-4 text-center">
+        <p class="text-2xl font-display font-bold text-emerald-400">{{ countByStatus('accepte') }}</p>
+        <p class="text-xs text-slate-500 mt-1">Accepted</p>
+      </div>
+      <div class="card p-4 text-center">
+        <p class="text-2xl font-display font-bold text-amber-400">{{ countByStatus('en_attente') }}</p>
+        <p class="text-xs text-slate-500 mt-1">Pending</p>
+      </div>
+    </div>
+  }
+
+  <!-- Loading -->
+  @if (loading()) {
+    <app-loading-spinner message="Loading applications..."></app-loading-spinner>
+  }
+
+  <!-- Empty state -->
+  @if (!loading() && applications().length === 0) {
+    <div class="flex flex-col items-center justify-center py-24 text-center">
+      <div class="w-24 h-24 rounded-3xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-6">
+        <svg class="w-12 h-12 text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
+        </svg>
+      </div>
+      <h3 class="font-display text-xl font-semibold text-white mb-2">No applications yet</h3>
+      <p class="text-slate-500 max-w-sm">Track your applications by clicking the clipboard icon on any job.</p>
+      <a routerLink="/jobs" class="btn-primary mt-6">Browse Jobs</a>
+    </div>
+  }
+
+  <!-- Applications list -->
+  @if (!loading() && applications().length > 0) {
+    <div class="flex flex-col gap-4">
+      @for (app of applications(); track app.id) {
+        <div class="card-hover p-5 animate-slide-up">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <!-- Info -->
+            <div class="flex items-start gap-3 flex-1 min-w-0">
+              <div class="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center text-white font-bold text-sm"
+                   [style.background]="getGradient(app.company)">
+                {{ app.company[0]?.toUpperCase() }}
+              </div>
+              <div class="min-w-0">
+                <h3 class="font-display font-semibold text-white text-base leading-snug">{{ app.title }}</h3>
+                <p class="text-sm text-slate-400">{{ app.company }} · {{ app.location }}</p>
+                <p class="text-xs text-slate-600 mt-1">Tracked {{ app.dateAdded | relativeDate }}</p>
+              </div>
+            </div>
+
+            <!-- Status selector -->
+            <div class="flex items-center gap-3">
+              <select
+                [value]="app.status"
+                (change)="updateStatus(app.id!, $event)"
+                class="text-sm rounded-xl border px-3 py-1.5 bg-surface-900 focus:outline-none focus:ring-2 focus:ring-primary-500/40 transition-colors cursor-pointer"
+                [class]="getStatusSelectClass(app.status)">
+                <option value="en_attente">⏳ Pending</option>
+                <option value="accepte">✅ Accepted</option>
+                <option value="refuse">❌ Rejected</option>
+              </select>
+
+              <a [href]="app.url" target="_blank" rel="noopener noreferrer"
+                 class="p-2 rounded-xl border border-white/10 hover:border-primary-500/30 hover:bg-primary-500/10 hover:text-primary-400 text-slate-500 transition-all duration-200">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+              </a>
+
+              <button
+                (click)="deleteApp(app.id!)"
+                class="p-2 rounded-xl border border-white/10 hover:border-red-500/30 hover:bg-red-500/10 hover:text-red-400 text-slate-500 transition-all duration-200">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="mt-4">
+            <textarea
+              [value]="app.notes || ''"
+              (blur)="saveNotes(app.id!, $event)"
+              placeholder="Add notes about this application..."
+              rows="2"
+              class="input-field text-sm resize-none text-slate-400 placeholder:text-slate-600">
+            </textarea>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
