@@ -1,0 +1,83 @@
+<div class="relative overflow-hidden">
+  <!-- Background effects -->
+  <div class="absolute inset-0 bg-glow pointer-events-none"></div>
+  <div class="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Hero section -->
+  <section class="page-container pt-24 pb-20 relative text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-sm font-medium mb-8 animate-fade-in">
+      <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-pulse-soft"></span>
+      Live jobs from The Muse & Arbeitnow
+    </div>
+
+    <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 animate-slide-up">
+      Find Work That<br>
+      <span class="text-gradient">Matters</span>
+    </h1>
+
+    <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10 animate-fade-in" style="animation-delay: 0.1s">
+      Search thousands of jobs from top companies worldwide. Save favorites, track applications, and land your dream role — all in one place.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in" style="animation-delay: 0.2s">
+      <a routerLink="/jobs" class="btn-primary text-base px-8 py-3.5 shadow-lg shadow-primary-500/20">
+        Browse Jobs
+        <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+      <a *ngIf="!isAuthenticated()" routerLink="/auth/register" class="btn-secondary text-base px-8 py-3.5">
+        Create Free Account
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="flex items-center justify-center gap-8 mt-16 pt-8 border-t border-white/5 animate-fade-in" style="animation-delay: 0.3s">
+      <div class="text-center">
+        <p class="font-display text-3xl font-bold text-white">2</p>
+        <p class="text-xs text-slate-500 mt-1">APIs Connected</p>
+      </div>
+      <div class="w-px h-10 bg-white/10"></div>
+      <div class="text-center">
+        <p class="font-display text-3xl font-bold text-white">20+</p>
+        <p class="text-xs text-slate-500 mt-1">Countries</p>
+      </div>
+      <div class="w-px h-10 bg-white/10"></div>
+      <div class="text-center">
+        <p class="font-display text-3xl font-bold text-white">Free</p>
+        <p class="text-xs text-slate-500 mt-1">Always</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features section -->
+  <section class="page-container py-20 relative">
+    <div class="text-center mb-14">
+      <h2 class="font-display text-3xl font-bold text-white mb-3">Everything you need</h2>
+      <p class="text-slate-500">Powerful tools to supercharge your job search</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div *ngFor="let feature of features" class="card p-6 hover:border-primary-500/30 transition-all duration-300 group">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300"
+             [style.background]="feature.bg">
+          <span class="text-xl">{{ feature.icon }}</span>
+        </div>
+        <h3 class="font-display font-semibold text-white mb-2">{{ feature.title }}</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">{{ feature.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA section -->
+  <section *ngIf="!isAuthenticated()" class="page-container py-16 text-center relative">
+    <div class="card p-12 border-primary-500/20 bg-gradient-to-b from-primary-950/40 to-transparent">
+      <h2 class="font-display text-3xl font-bold text-white mb-3">Ready to find your next role?</h2>
+      <p class="text-slate-400 mb-8">Join today and start discovering opportunities that match your goals.</p>
+      <a routerLink="/auth/register" class="btn-primary text-base px-8 py-3.5 shadow-lg shadow-primary-500/20">
+        Get Started – It's Free
+      </a>
+    </div>
+  </section>
+</div>
