@@ -1,0 +1,169 @@
+<nav class="sticky top-0 z-40 border-b border-white/8 bg-surface-950/80 backdrop-blur-xl">
+  <div class="page-container">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-lg shadow-primary-500/20 group-hover:shadow-primary-500/40 transition-shadow duration-300">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <span class="font-display font-bold text-lg text-white">
+          Job<span class="text-gradient">Finder</span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden sm:flex items-center gap-1">
+        <a routerLink="/jobs"
+           routerLinkActive="text-white bg-white/8"
+           [routerLinkActiveOptions]="{exact: false}"
+           class="btn-ghost text-sm">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          Recherche
+        </a>
+
+        @if (isAuthenticated()) {
+          <a routerLink="/favorites"
+             routerLinkActive="text-white bg-white/8"
+             class="btn-ghost text-sm relative">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+            </svg>
+            Favoris
+            @if (shouldShowFavoritesCount()) {
+              <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary-500 rounded-full text-white text-[10px] font-bold flex items-center justify-center">
+                {{ getFavoritesCountDisplay() }}
+              </span>
+            }
+          </a>
+
+          <a routerLink="/applications"
+             routerLinkActive="text-white bg-white/8"
+             class="btn-ghost text-sm">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Candidatures
+          </a>
+        }
+      </div>
+
+      <!-- Right side -->
+      <div class="flex items-center gap-3">
+
+        <!-- Guest buttons -->
+        @if (!isAuthenticated()) {
+          <a routerLink="/auth/login" class="btn-ghost text-sm hidden sm:inline-flex">Connexion</a>
+          <a routerLink="/auth/register" class="btn-primary text-sm">Inscription</a>
+        }
+
+        <!-- User dropdown -->
+        @if (isAuthenticated()) {
+          <div class="relative dropdown-container">
+            <button
+              (click)="toggleDropdown()"
+              class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center text-white text-xs font-bold">
+                {{ getUserInitials() }}
+              </div>
+              <span class="hidden sm:block text-sm font-medium text-slate-300">{{ getUserFirstName() }}</span>
+              <svg class="w-4 h-4 text-slate-500 transition-transform duration-200"
+                   [class.rotate-180]="dropdownOpen()"
+                   fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+
+            @if (dropdownOpen()) {
+              <div class="absolute right-0 top-full mt-2 w-52 bg-surface-900 border border-white/10 rounded-2xl shadow-2xl shadow-black/60 py-1 animate-fade-in">
+                <div class="px-4 py-3 border-b border-white/8">
+                  <p class="text-sm font-semibold text-white">{{ getUserFullName() }}</p>
+                  <p class="text-xs text-slate-500 truncate">{{ getUserEmail() }}</p>
+                </div>
+                <a routerLink="/profile"
+                   (click)="closeDropdown()"
+                   class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                  </svg>
+                  Mon Profil
+                </a>
+                <button
+                  (click)="logout()"
+                  class="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/5 transition-colors">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                  </svg>
+                  Déconnexion
+                </button>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Mobile menu button -->
+        <button class="sm:hidden btn-ghost p-2" (click)="toggleMobileMenu()">
+          @if (!mobileMenuOpen()) {
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          } @else {
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  @if (mobileMenuOpen()) {
+    <div class="sm:hidden border-t border-white/8 bg-surface-950/95 backdrop-blur-xl animate-fade-in">
+      <div class="page-container py-4 flex flex-col gap-1">
+        <a routerLink="/jobs" (click)="closeMobileMenu()"
+           routerLinkActive="bg-white/8 text-white"
+           class="btn-ghost justify-start text-sm">Recherche</a>
+
+        @if (isAuthenticated()) {
+          <a routerLink="/favorites" (click)="closeMobileMenu()"
+             routerLinkActive="bg-white/8 text-white"
+             class="btn-ghost justify-start text-sm">
+            Favoris
+            @if (shouldShowFavoritesCount()) {
+              <span class="ml-auto px-1.5 py-0.5 text-[10px] font-bold bg-primary-600 text-white rounded-full">
+                {{ getFavoritesCountDisplay() }}
+              </span>
+            }
+          </a>
+          <a routerLink="/applications" (click)="closeMobileMenu()"
+             routerLinkActive="bg-white/8 text-white"
+             class="btn-ghost justify-start text-sm">Candidatures</a>
+        }
+
+        <div class="divider my-2"></div>
+
+        @if (isAuthenticated()) {
+          <div class="flex items-center gap-3 px-2 py-2">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+              {{ getUserInitials() }}
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-medium text-white truncate">{{ getUserFullName() }}</p>
+              <p class="text-xs text-slate-500 truncate">{{ getUserEmail() }}</p>
+            </div>
+          </div>
+          <a routerLink="/profile" (click)="closeMobileMenu()" class="btn-ghost justify-start text-sm">Mon Profil</a>
+          <button (click)="logout()" class="btn-ghost justify-start text-sm text-red-400 hover:text-red-300">Déconnexion</button>
+        } @else {
+          <a routerLink="/auth/login" (click)="closeMobileMenu()" class="btn-ghost justify-start text-sm">Connexion</a>
+          <a routerLink="/auth/register" (click)="closeMobileMenu()" class="btn-primary text-sm justify-center">Inscription</a>
+        }
+      </div>
+    </div>
+  }
+</nav>
