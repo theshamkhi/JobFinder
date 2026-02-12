@@ -1,0 +1,174 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Demo",
+      "lastName": "User",
+      "email": "demo@jobfinder.com",
+      "password": "Demo1234!"
+    }
+  ],
+  "favoritesOffers": [
+    {
+      "id": "a728",
+      "userId": 1,
+      "offerId": "arbeitnow_early-career-machine-learning-engineer-accelerator-program-berlin-453915",
+      "title": "Early-Career Machine Learning Engineer - Accelerator Program",
+      "company": "SumUp",
+      "location": "Berlin, Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/sumup/early-career-machine-learning-engineer-accelerator-program-berlin-453915",
+      "apiSource": "arbeitnow",
+      "dateAdded": "2026-02-11T23:42:49.714Z"
+    },
+    {
+      "id": "30ac",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_principal-product-manager-ai-munich-120135",
+      "title": "Principal Product Manager - AI",
+      "company": "TradeLink",
+      "location": "Munich (Remote)",
+      "url": "https://www.arbeitnow.com/jobs/companies/tradelink/principal-product-manager-ai-munich-120135",
+      "apiSource": "arbeitnow",
+      "dateAdded": "2026-02-12T08:37:19.791Z"
+    },
+    {
+      "id": "616b",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_senior-software-project-manager-gilching-291076",
+      "title": "Senior Software Project Manager (m/f/d)",
+      "company": "Quantum- Systems GmbH",
+      "location": "Gilching",
+      "url": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-software-project-manager-gilching-291076",
+      "apiSource": "arbeitnow",
+      "dateAdded": "2026-02-12T08:37:24.383Z"
+    },
+    {
+      "id": "9c97",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_senior-java-backend-engineer-flixtrain-operations-management-system-berlin-71039",
+      "title": "Senior Java Backend Engineer - FlixTrain Operations Management System (m/f/d)",
+      "company": "Flix",
+      "location": "Berlin, Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/flix/senior-java-backend-engineer-flixtrain-operations-management-system-berlin-71039",
+      "apiSource": "arbeitnow",
+      "dateAdded": "2026-02-12T08:37:27.116Z"
+    },
+    {
+      "id": "4f9d",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_early-career-machine-learning-engineer-accelerator-program-berlin-453915",
+      "title": "Early-Career Machine Learning Engineer - Accelerator Program",
+      "company": "SumUp",
+      "location": "Berlin, Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/sumup/early-career-machine-learning-engineer-accelerator-program-berlin-453915",
+      "apiSource": "arbeitnow",
+      "dateAdded": "2026-02-12T08:48:48.953Z"
+    }
+  ],
+  "applications": [
+    {
+      "id": "a9c6",
+      "userId": 1,
+      "offerId": "arbeitnow_early-career-machine-learning-engineer-accelerator-program-berlin-453915",
+      "apiSource": "arbeitnow",
+      "title": "Early-Career Machine Learning Engineer - Accelerator Program",
+      "company": "SumUp",
+      "location": "Berlin, Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/sumup/early-career-machine-learning-engineer-accelerator-program-berlin-453915",
+      "status": "en_attente",
+      "notes": "",
+      "dateAdded": "2026-02-11T23:42:51.624Z"
+    },
+    {
+      "id": "0815",
+      "userId": 1,
+      "offerId": "arbeitnow_senior-backend-engineer-accounts-berlin-421339",
+      "apiSource": "arbeitnow",
+      "title": "Senior Backend Engineer - Accounts",
+      "company": "SumUp",
+      "location": "Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/sumup/senior-backend-engineer-accounts-berlin-421339",
+      "status": "en_attente",
+      "notes": "",
+      "dateAdded": "2026-02-11T23:42:54.389Z"
+    },
+    {
+      "id": "0813",
+      "userId": 1,
+      "offerId": "arbeitnow_senior-java-backend-engineer-flixtrain-operations-management-system-berlin-71039",
+      "apiSource": "arbeitnow",
+      "title": "Senior Java Backend Engineer - FlixTrain Operations Management System (m/f/d)",
+      "company": "Flix",
+      "location": "Berlin, Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/flix/senior-java-backend-engineer-flixtrain-operations-management-system-berlin-71039",
+      "status": "en_attente",
+      "notes": "",
+      "dateAdded": "2026-02-11T23:42:55.668Z"
+    },
+    {
+      "id": "b3d3",
+      "userId": 1,
+      "offerId": "arbeitnow_principal-product-manager-ai-munich-120135",
+      "apiSource": "arbeitnow",
+      "title": "Principal Product Manager - AI",
+      "company": "TradeLink",
+      "location": "Munich (Remote)",
+      "url": "https://www.arbeitnow.com/jobs/companies/tradelink/principal-product-manager-ai-munich-120135",
+      "status": "en_attente",
+      "notes": "",
+      "dateAdded": "2026-02-12T00:05:53.981Z"
+    },
+    {
+      "id": "f19b",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_principal-product-manager-ai-munich-120135",
+      "apiSource": "arbeitnow",
+      "title": "Principal Product Manager - AI",
+      "company": "TradeLink",
+      "location": "Munich (Remote)",
+      "url": "https://www.arbeitnow.com/jobs/companies/tradelink/principal-product-manager-ai-munich-120135",
+      "status": "en_attente",
+      "notes": "",
+      "dateAdded": "2026-02-12T08:13:59.104Z"
+    },
+    {
+      "id": "1dfe",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_senior-software-project-manager-gilching-291076",
+      "apiSource": "arbeitnow",
+      "title": "Senior Software Project Manager (m/f/d)",
+      "company": "Quantum- Systems GmbH",
+      "location": "Gilching",
+      "url": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-software-project-manager-gilching-291076",
+      "status": "en_attente",
+      "notes": "Waiting",
+      "dateAdded": "2026-02-12T08:37:23.439Z"
+    },
+    {
+      "id": "9797",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_senior-java-backend-engineer-flixtrain-operations-management-system-berlin-71039",
+      "apiSource": "arbeitnow",
+      "title": "Senior Java Backend Engineer - FlixTrain Operations Management System (m/f/d)",
+      "company": "Flix",
+      "location": "Berlin, Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/flix/senior-java-backend-engineer-flixtrain-operations-management-system-berlin-71039",
+      "status": "en_attente",
+      "notes": "",
+      "dateAdded": "2026-02-12T08:37:26.382Z"
+    },
+    {
+      "id": "3702",
+      "userId": "bbd7",
+      "offerId": "arbeitnow_senior-backend-engineer-accounts-berlin-421339",
+      "apiSource": "arbeitnow",
+      "title": "Senior Backend Engineer - Accounts",
+      "company": "SumUp",
+      "location": "Berlin, Germany",
+      "url": "https://www.arbeitnow.com/jobs/companies/sumup/senior-backend-engineer-accounts-berlin-421339",
+      "status": "accepte",
+      "notes": "",
+      "dateAdded": "2026-02-12T08:48:46.240Z"
+    }
+  ]
+}
