@@ -55,7 +55,7 @@ export class JobService {
       map(response => {
         let jobs = response.results.map(job => this.normalizeTheMuseJob(job));
 
-        // Filter by keyword in title (business requirement)
+        // Filter by keyword in title
         if (params.keyword) {
           const keywords = params.keyword.toLowerCase().split(' ').filter(k => k.length > 0);
           jobs = jobs.filter(job =>
@@ -113,7 +113,6 @@ export class JobService {
       map(response => {
         let jobs = response.data.map(job => this.normalizeArbeitnowJob(job));
 
-        // Filter by keyword in title (business requirement)
         if (params.keyword) {
           const keywords = params.keyword.toLowerCase().split(' ').filter(k => k.length > 0);
           jobs = jobs.filter(job =>
@@ -139,7 +138,6 @@ export class JobService {
   }
 
   private normalizeArbeitnowJob(job: ArbeitnowJob): NormalizedJob {
-    // Strip HTML from description
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = job.description || '';
     const plainDescription = tempDiv.textContent || tempDiv.innerText || '';
@@ -172,10 +170,10 @@ export class JobService {
 
     if (sources.themuse) {
       console.log('✅ Fetching from The Muse');
-      apiCalls.push(this.searchTheMuse({ ...params, page: page - 1 })); // The Muse is 0-indexed
+      apiCalls.push(this.searchTheMuse({ ...params, page: page - 1 }));
     } else {
       console.log('⏭️  Skipping The Muse');
-      apiCalls.push(of([])); // Empty observable
+      apiCalls.push(of([]));
     }
 
     if (sources.arbeitnow) {
@@ -193,19 +191,16 @@ export class JobService {
         // Merge results
         let allJobs = [...museJobs, ...arbeitnowJobs];
 
-        // Apply remote filter to combined results
         if (params.remote === true) {
           const beforeFilter = allJobs.length;
           allJobs = allJobs.filter(job => job.remote === true);
           console.log(`🏠 Remote filter applied: ${beforeFilter} jobs → ${allJobs.length} remote jobs`);
         }
 
-        // Sort by date (most recent first)
         allJobs.sort((a, b) =>
           new Date(b.publicationDate).getTime() - new Date(a.publicationDate).getTime()
         );
 
-        // Client-side pagination
         const totalItems = allJobs.length;
         const totalPages = Math.ceil(totalItems / this.ITEMS_PER_PAGE);
         const startIndex = (page - 1) * this.ITEMS_PER_PAGE;
@@ -232,7 +227,6 @@ export class JobService {
     );
   }
 
-  // Fetch single Muse job by ID (for detail view)
   getMuseJob(id: string): Observable<NormalizedJob | null> {
     return this.http.get<TheMuseJob>(`${this.MUSE_URL}/jobs/${id}`).pipe(
       map(job => this.normalizeTheMuseJob(job)),
